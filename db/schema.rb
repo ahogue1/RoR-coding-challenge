@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190608181948) do
+ActiveRecord::Schema.define(version: 20190608183151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(version: 20190608181948) do
     t.bigint "house_id"
     t.string "name"
     t.index ["house_id"], name: "index_banner_people_on_house_id"
+  end
+
+  create_table "handouts", force: :cascade do |t|
+    t.date "date"
+    t.integer "value"
+    t.bigint "banner_person_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["banner_person_id"], name: "index_handouts_on_banner_person_id"
   end
 
   create_table "houses", force: :cascade do |t|
@@ -39,5 +48,6 @@ ActiveRecord::Schema.define(version: 20190608181948) do
   end
 
   add_foreign_key "banner_people", "houses"
+  add_foreign_key "handouts", "banner_people"
   add_foreign_key "loyalty_points", "banner_people"
 end
