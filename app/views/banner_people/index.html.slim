@@ -1,6 +1,13 @@
-.center(style="text-align: center;")
-  img(src='https://media.giphy.com/media/26DOs997h6fgsCthu/giphy.gif')
 
-  .banner-persons-container
-    br
-    | May the odds be ever in your favor 💅
+.banner-people-container
+  table
+    tr
+      th Banner Person
+      th House
+      th Current Loyalty Points
+    - @banner_people.each do |person|
+      tr
+        td = person.name
+        td = person.house.name
+        td = person.loyalty_points.last.value
+        td.btn = link_to "View Timeline", banner_person_path(person)
