@@ -2,3 +2,11 @@
   width: 800px;
   margin: 2em auto;
 }
+
+.banner_person_container {
+  text-align: center;
+}
+
+.td_number {
+  text-align: right;
+}

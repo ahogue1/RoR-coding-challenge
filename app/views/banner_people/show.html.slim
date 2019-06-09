@@ -1,0 +1,25 @@
+.banner_person_container
+  h1 = @banner_person.name
+  h3 = "House #{ @banner_person.house.name }"
+
+  .banner_person_table
+    table
+      thead
+        tr
+          th Date
+          th Handout
+          th Loyalty Points
+
+      tbody
+        - days_in_month = @date.end_of_month.day
+
+        - (1..days_in_month).each do |day|
+          - date = Date.new(@date.year, @date.month, day)
+          - handout = @handouts.find { |handout| handout.date == date }
+          - loyalty_point = @loyalty_points.find { |loyalty_point| loyalty_point.date == date }
+
+          - if handout || loyalty_point
+            tr
+              td = date.strftime("%b %d, %Y")
+              td.td_number = handout ? number_with_delimiter(handout.value) : "n/a"
+              td.td_number = loyalty_point ? loyalty_point.value : "n/a"
