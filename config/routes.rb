@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  get 'banner_persons/index'
 
-  root to: 'banner_persons#index'
-  resources :banner_persons, only: [:index, :show, :update]
+  root to: 'banner_people#index'
+  resources :banner_people, only: [:index, :show, :update]
 end
