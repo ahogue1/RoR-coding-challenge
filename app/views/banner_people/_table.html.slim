@@ -7,15 +7,8 @@
         th Loyalty Points
 
     tbody
-      - days_in_month = @date.end_of_month.day
-
-      - (1..days_in_month).each do |day|
-        - date = Date.new(@date.year, @date.month, day)
-        - handout = @handouts.find { |handout| handout.date == date }
-        - loyalty_point = @loyalty_points.find { |loyalty_point| loyalty_point.date == date }
-
-        - if handout || loyalty_point
+      - @data.each do |datum|
           tr
-            td = date.strftime("%b %d, %Y")
-            td.td_number = handout ? number_with_delimiter(handout.value) : "n/a"
-            td.td_number = loyalty_point ? loyalty_point.value : "n/a"
+            td = datum[:date].strftime("%b %d, %Y")
+            td.td_number = datum[:handout] ? number_with_delimiter(datum[:handout].value) : "n/a"
+            td.td_number = datum[:loyalty_point] ? datum[:loyalty_point].value : "n/a"
