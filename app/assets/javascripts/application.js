@@ -14,5 +14,7 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require rails-ujs
+//= require highcharts
+//= require highcharts/themes/dark-green
 //= require turbolinks
 //= require_tree .

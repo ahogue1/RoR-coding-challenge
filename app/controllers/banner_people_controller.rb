@@ -8,6 +8,14 @@ class BannerPeopleController < ApplicationController
     @handouts = @banner_person.handouts
     @loyalty_points = @banner_person.loyalty_points
     @data = banner_person_monthly_data(Date.today, @banner_person)
+
+    gon.dates = @data.map { |datum| datum[:date].strftime("%b %d") }
+    gon.handouts = @data.map { |datum|
+      datum[:handout] ? datum[:handout].value : nil
+    }
+    gon.loyalty_points = @data.map.with_index { |datum, index|
+      datum[:loyalty_point] ? [index, datum[:loyalty_point].value] : nil
+    }.compact
   end
 
   private

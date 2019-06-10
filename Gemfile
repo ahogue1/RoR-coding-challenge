@@ -27,6 +27,7 @@ gem 'foundation-rails'
 gem 'high_voltage'
 gem 'slim-rails'
 
+gem 'highcharts-rails', '~> 6.0', '>= 6.0.3'
 gem 'gon'
 gem 'responders'
 gem 'jquery-turbolinks'

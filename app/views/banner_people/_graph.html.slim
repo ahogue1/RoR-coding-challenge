@@ -1,0 +1,67 @@
+.graph-container
+
+  #container style="min-width: 310px; height: 400px; margin: 0 auto"
+
+javascript:
+  Highcharts.chart('container', {
+    chart: {
+      zoomType: 'xy'
+    },
+    title: {
+      text: 'Handouts and Loyalty Points Monthly Report'
+    },
+    xAxis: [{
+      categories: gon.dates,
+      crosshair: true
+    }],
+    yAxis: [{ // Primary yAxis
+      labels: {
+        format: '{value}',
+        style: {
+          color: Highcharts.getOptions().colors[0]
+        }
+      },
+      title: {
+        text: 'Handouts',
+        style: {
+          color: Highcharts.getOptions().colors[0]
+        }
+      }
+    }, { // Secondary yAxis
+      title: {
+        text: 'Loyalty Points',
+        style: {
+          color: Highcharts.getOptions().colors[1]
+        }
+      },
+      labels: {
+        format: '{value}',
+        style: {
+          color: Highcharts.getOptions().colors[1]
+        }
+      },
+      opposite: true
+    }],
+    tooltip: {
+      shared: true
+    },
+    legend: {
+      layout: 'vertical',
+      align: 'left',
+      x: 120,
+      verticalAlign: 'top',
+      y: 100,
+      floating: true,
+      backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || 'rgba(255,255,255,0.25)'
+    },
+    series: [{
+      name: 'Handouts',
+      type: 'column',
+      data: gon.handouts,
+    }, {
+      name: 'Loyalty Points',
+      type: 'spline',
+      yAxis: 1,
+      data: gon.loyalty_points,
+    }]
+  });
