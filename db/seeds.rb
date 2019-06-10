@@ -8,12 +8,21 @@ puts "-------------------------------------------"
 
 
 ### Generate 4 random Houses
+houses = []
+
 4.times do
   house = House.create(name: Faker::TvShows::GameOfThrones.unique.house)
+  houses << house
 
-  puts "Creating '#{house.name}' House..."
+  puts "Created House '#{house.name}'"
+end
 
-  ### Generate 2 banner people per house
+puts "-------------------------------------------"
+puts "Houses Created, populating houses and collecting Banner People data..."
+puts "-------------------------------------------"
+
+### Generate 2 banner people per house
+houses.each do |house|
   2.times do
     banner_person = BannerPerson.create(
       name: Faker::TvShows::GameOfThrones.unique.character,
@@ -35,34 +44,26 @@ puts "-------------------------------------------"
     ### Generate Loyalty points about once/week
     random_days = [rand(1..7), rand(8..14), rand(15..22), rand(23..30)] # Generate 4 random dates each week
     random_days.each do |day|
-      LoyaltyPoint.create(
+      points = LoyaltyPoint.create(
         banner_person: banner_person,
         value: rand(5.0..18.0).round(1),
         date: Date.new(2019, 6, day)
       )
+
+      #Check for low loyalty points and generate house change if loyalty points fall below 10
+      if points.value < 10
+        old_house = banner_person.house
+        new_house = houses.sample
+
+        if new_house == old_house
+          puts "#{banner_person.name}'s Loyalty Points dropped too low, but will remain in House #{new_house.name}"
+        else
+          banner_person.house = new_house
+          banner_person.save
+          puts "#{banner_person.name}'s Loyalty Points dropped too low and has switched from House #{old_house.name} to House #{new_house.name}"
+        end
+      end
     end
-  end
-end
-
-puts "-------------------------------------------"
-puts "Seeds Created, calculating house changes..."
-puts "-------------------------------------------"
-
-### Reassign Houses for low loyalty points
-houses = House.all.to_a
-low_loyalties = LoyaltyPoint.where("value < 10")
-
-low_loyalties.each do |loyalty|
-  banner_person = loyalty.banner_person
-  old_house = banner_person.house
-  new_house = houses.sample
-
-  if new_house == old_house
-    puts "#{banner_person.name}'s Loyalty Points dropped too low, but will remain in House #{new_house.name}"
-  else
-    banner_person.house = new_house
-    banner_person.save
-    puts "#{banner_person.name}'s Loyalty Points dropped too low and has switched from House #{old_house.name} to House #{new_house.name}"
   end
 end
 
