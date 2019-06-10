@@ -64,6 +64,16 @@ houses.each do |house|
         end
       end
     end
+
+    ### Generate Loyalty points every couple of weeks
+    random_days = [rand(1..15), rand(15..30)] # Generate 2 random advisement dates per month
+    random_days.each do |day|
+      Advisement.create(
+        banner_person: banner_person,
+        value: rand(2..200) * 100,
+        date: Date.new(2019, 6, day)
+      )
+    end
   end
 end
 
