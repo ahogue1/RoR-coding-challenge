@@ -7,7 +7,7 @@ class BannerPeopleController < ApplicationController
     @banner_person = BannerPerson.find(params[:id])
     @handouts = @banner_person.handouts
     @loyalty_points = @banner_person.loyalty_points
-    @graph_data = graph_data(Date.today, @banner_person)
+    @graph_data = graph_data( @banner_person)
     @table_data = table_data(@banner_person.advisements, @graph_data)
 
     gon.dates = @graph_data.map { |datum| datum[:date].strftime("%b %d") }
@@ -21,12 +21,12 @@ class BannerPeopleController < ApplicationController
 
   private
 
-  def graph_data(date, banner_person)
+  def graph_data(banner_person)
     graph_data = []
-    days_in_month = date.end_of_month.day
+    house = banner_person.handouts.first.house
 
-    (1..days_in_month).each do |day|
-      date = Date.new(date.year, date.month, day)
+    (1..31).each do |day|
+      date = Date.new(2019, 1, day)
 
 
       handout = banner_person.handouts.find { |handout| handout.date == date }
@@ -34,11 +34,17 @@ class BannerPeopleController < ApplicationController
         loyalty_point.date == date
       end
 
+      if handout
+          house = handout.house
+          house.save
+      end
+
       if handout || loyalty_point
         graph_data.push({
           date: date,
           handout: handout,
-          loyalty_point: loyalty_point
+          loyalty_point: loyalty_point,
+          house: house
         })
       end
     end
