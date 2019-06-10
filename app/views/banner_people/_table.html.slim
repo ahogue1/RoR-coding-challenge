@@ -5,10 +5,12 @@
         th Date
         th Handout
         th Loyalty Points
+        th Advisement
 
     tbody
-      - @data.each do |datum|
+      - @table_data.each do |datum|
           tr
             td = datum[:date].strftime("%b %d, %Y")
             td.td_number = datum[:handout] ? number_with_delimiter(datum[:handout].value) : "n/a"
             td.td_number = datum[:loyalty_point] ? datum[:loyalty_point].value : "n/a"
+            td.td_number = datum[:advisement] ? number_with_delimiter(datum[:advisement].value) : "n/a"
