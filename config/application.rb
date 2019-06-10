@@ -12,6 +12,7 @@ require "action_cable/engine"
 require "sprockets/railtie"
 # require "rails/test_unit/railtie"
 
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -44,5 +45,8 @@ module BannerPersonSkeleton
     config.time_zone = 'Eastern Time (US & Canada)'
     config.active_record.default_timezone = :utc
     config.beginning_of_week = :sunday
+
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'fonts')
+    config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
   end
 end
