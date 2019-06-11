@@ -11,6 +11,7 @@ h3 Table
     thead
       tr
         th Date
+        th House ID
         th House
         th Handout
         th Loyalty Points
@@ -22,6 +23,8 @@ h3 Table
         tr border="1"
           td
             p = datum[:date].strftime("%b %d, %Y")
+          td
+            / p = "#{datum[:house].prefix}#{@banner_person.id} "
           td
             p = datum[:house].name
           td.td_number

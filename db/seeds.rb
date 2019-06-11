@@ -11,7 +11,8 @@ puts "-------------------------------------------"
 houses = []
 
 4.times do
-  house = House.create(name: Faker::TvShows::GameOfThrones.unique.house)
+  name = Faker::TvShows::GameOfThrones.unique.house
+  house = House.create(name: name, prefix: name.scan(/\b[a-zA-Z]/).join.upcase)
   houses << house
 
   puts "Created House '#{house.name}'"
