@@ -1,0 +1,171 @@
+body {
+  background-image: radial-gradient(farthest-side at -41% -149%, #d5ef24, #7f8a2e, #2c2d0f9c, #141517);
+  background-attachment: fixed;
+  color: white;
+}
+
+p, a {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+h1, h2, h3 {
+  font-family: Game of Thrones;
+}
+
+h4, h5, h6 {
+  font-family: 'Cinzel', serif;
+}
+
+
+.banner-people-container {
+  margin: 2em auto;
+  text-align: center;
+  h1 {
+    margin-top: 15px;
+    font-size: 47px;
+    color: #de8909;
+    text-shadow: 2px 2px #132335;
+     }
+}
+
+.banner_people_table {
+  width: 900px;
+  min-height: 600px;
+  border-radius: 12px;
+  background: #ffffffed;
+  color: black;
+  padding: 20px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  a {
+    color: #B22C17;
+    text-decoration: none;
+  }
+  a :hover {
+    color: #8e2312
+  }
+  th {
+    padding: 2px;
+    border-bottom: 1px solid black;
+  }
+}
+
+.banner_person_container {
+  text-align: center;
+  h1 {
+    color: #de8909;
+    text-shadow: 2px 2px #132335;
+  }
+  h3 {
+    color: #B22C17;
+  }
+
+  table {
+    height: 400px;
+  }
+
+
+}
+
+ .back_button {
+    margin: 10px;
+    background-color: #B22C17;
+    border: none;
+    color: white;
+    padding: 7px 33px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+
+.back_button:hover {
+  background: #8e2312;
+}
+.extend_view {
+  margin: 10px;
+  p { display: inline-block; }
+
+}
+
+.banner_person_extended_table table{
+  margin: 0 auto 50px;
+  width: 800px;
+}
+
+.banner_person_simple_table table{
+  margin: 0 auto 50px;
+  width: 800px;
+}
+
+.td_number {
+  text-align: right;
+}
+
+
+/* Make it snow*/
+
+.snow {
+    border-radius: 50%;
+    opacity: 0.8;
+    position: absolute;
+    top:-100vh;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+    100% {transform: translateY(200vh); }
+}
+
+$s1:"";
+$s2:"";
+$s3:"";
+@for $i from 1 through 400 {
+    $s1: $s1 + random(1000)*0.1vw + " " + random(1000)*0.1vh + " " + 0 + " " + random(50)*-0.01rem + #fff;
+    $s2: $s2 + random(1000)*0.1vw + " " + random(1000)*0.1vh + " " + 0 + " " + random(50)*-0.01rem + #fff;
+    $s3: $s3 + random(1000)*0.1vw + " " + random(1000)*0.1vh + " " + 0 + " " + random(50)*-0.01rem + #fff;
+    @if $i < 400 {
+        $s1: $s1 + ",";
+        $s2: $s2 + ",";
+        $s3: $s3 + ",";
+    }
+}
+
+.layer1 {
+    width: .7rem;
+    height: .7rem;
+    filter:blur(3px);
+    box-shadow: #{$s1};
+    animation-duration: 9s;
+}
+
+.layer2 {
+    width: .5rem;
+    height: .5rem;
+    filter:blur(5px);
+    box-shadow: #{$s2};
+    animation-duration: 12s;
+}
+.layer3 {
+    width: .4rem;
+    height: 0.4rem;
+    filter:blur(7px);
+    box-shadow: #{$s3};
+    animation-duration: 14s;
+}
+
+.layer1.a {
+    animation-delay: -7s;
+}
+
+.layer2.a {
+    animation-delay: -9s;
+}
+
+.layer3.a {
+    animation-delay: -10s;
+}
+

@@ -1,5 +1,13 @@
-.banner_person_table
-  table
+h3 Table
+
+.extend_view
+  | <input type="radio" id="simple" name="tab" checked=true />
+    <label for="simple">Simple Table View</label>
+    <input type="radio" id="extended" name="tab" />
+    <label for="extended">Extended Table View</label>
+
+.banner_person_extended_table id ="extended_table" style="display:none;"
+  table class = "banner_person_table"
     thead
       tr
         th Date
@@ -11,9 +19,39 @@
     tbody
       - @table_data.each do |datum|
         - house = datum[:house]
-        tr
-          td = datum[:date].strftime("%b %d, %Y")
-          td.td_number = datum[:house].name
-          td.td_number = datum[:handout] ? number_with_delimiter(datum[:handout].value) : "n/a"
-          td.td_number = datum[:loyalty_point] ? datum[:loyalty_point].value : "n/a"
-          td.td_number = datum[:advisement] ? number_with_delimiter(datum[:advisement]).value : "n/a"
+        tr border="1"
+          td
+            p = datum[:date].strftime("%b %d, %Y")
+          td
+            p = datum[:house].name
+          td.td_number
+            p = datum[:handout] ? number_with_delimiter(datum[:handout].value) : "—"
+          td.td_number
+            p = datum[:loyalty_point] ? datum[:loyalty_point].value : "—"
+          td.td_number
+            p = datum[:advisement] ? number_with_delimiter(datum[:advisement].value) : "—"
+
+
+.banner_person_simple_table id ="simple_table"
+  table class = "banner_person_table"
+    thead
+      tr
+        th Date
+        th Handout
+        th Loyalty Points
+        th Advisement
+
+    tbody
+      - @table_data.each do |datum|
+        - house = datum[:house]
+        tr border="1"
+          td
+            p = datum[:date].strftime("%b %d, %Y")
+
+
+          td.td_number
+            p = datum[:handout] ? number_with_delimiter(datum[:handout].value) : "—"
+          td.td_number
+            p = datum[:loyalty_point] ? datum[:loyalty_point].value : "—"
+          td.td_number
+            p = datum[:advisement] ? number_with_delimiter(datum[:advisement].value) : "—"

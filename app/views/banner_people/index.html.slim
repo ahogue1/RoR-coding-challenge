@@ -1,13 +1,29 @@
-
+.snow class="layer1 a"
+.snow class="layer1"
+.snow class="layer2 a"
+.snow class="layer2"
+.snow class="layer3 a"
+.snow class="layer3"
 .banner-people-container
-  table
-    tr
-      th Banner Person
-      th House
-      th Current Loyalty Points
-    - @banner_people.each do |person|
-      tr
-        td = person.name
-        td = person.house.name
-        td = person.loyalty_points.last.value
-        td.btn = link_to "View Timeline", banner_person_path(person)
+  h1 Banner People Standings
+  table class = "banner_people_table"
+    thead
+      tr.bottom-border
+        th
+          h4 Banner Person
+        th
+          h4 House
+        th
+          h4 Loyalty Points
+        th
+          h4
+
+      - @banner_people.each do |person|
+        tr
+          td
+            p = person.name
+          td
+            p = person.house.name
+          td
+            p = person.loyalty_points.last.value
+          td.btn = link_to "VIEW", banner_person_path(person)

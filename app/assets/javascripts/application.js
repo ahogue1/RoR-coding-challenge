@@ -17,3 +17,16 @@
 //= require highcharts
 //= require turbolinks
 //= require_tree .
+
+
+$(document).ready(function() {
+  $('#simple').change(function() {
+    document.getElementById('extended_table').style.display ='none';
+    document.getElementById('simple_table').style.display ='block';
+  });
+
+  $('#extended').change(function() {
+    document.getElementById('extended_table').style.display = 'block';
+    document.getElementById('simple_table').style.display ='none';
+  });
+})
