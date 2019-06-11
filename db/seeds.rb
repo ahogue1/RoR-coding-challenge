@@ -32,8 +32,8 @@ houses.each do |house|
 
 
     loyalty_point_days = [rand(1..7), rand(8..15), rand(16..23), rand(24..31)] # Generate 4 random dates each week
-    handout_days = (1..30).to_a.shuffle.take(rand(8..12)) # Generate 8 to 12 unique random dates
-    advisement_days = handout_days.shuffle.take(2) # Generate Handouts: 2 to 3 handouts per week
+    handout_days = (1..31).to_a.shuffle.take(rand(8..12)) # Generate 8 to 12 unique random dates
+    advisement_days = [handout_days.shuffle.take(2)] # Generate Handouts: 2 to 3 handouts per week
 
     (1..31).each do |day|
       ### Generate Loyalty points about once/week
@@ -71,16 +71,17 @@ houses.each do |house|
             house: banner_person.house
           )
         end
-      end
 
         ### Generate Advisement points every couple of weeks
-      if advisement_days.include? day
-          recommendation =  value + [- 500, 0, 500].shuffle.first  #decides if handout should increase, decrease or maintain
-          Advisement.create(
-          banner_person: banner_person,
-          value: recommendation,
-          date: date
-        )
+        if advisement_days.include? day
+            recommendation =  value + [- 500, 0, 500].shuffle.first  #decides if handout should increase, decrease or maintain
+            Advisement.create(
+            banner_person: banner_person,
+            value: recommendation,
+            date: date,
+            house: banner_person.house
+          )
+        end
       end
     end
   end

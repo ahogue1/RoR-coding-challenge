@@ -62,7 +62,8 @@ class BannerPeopleController < ApplicationController
       else
         table_data.push({
           date: advisement.date,
-          advisement: advisement
+          advisement: advisement,
+          house: advisement.house,
         })
       end
     end
