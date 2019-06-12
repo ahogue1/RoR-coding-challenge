@@ -37,13 +37,6 @@ h4, h5, h6 {
   padding: 20px;
   margin: 0 auto;
   border-collapse: collapse;
-  a {
-    color: #B22C17;
-    text-decoration: none;
-  }
-  a :hover {
-    color: #8e2312
-  }
   th {
     padding: 2px;
     border-bottom: 1px solid black;
@@ -67,21 +60,9 @@ h4, h5, h6 {
 }
 
  .back_button {
-    margin: 10px;
-    background-color: #B22C17;
-    border: none;
-    color: white;
-    padding: 7px 33px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 10px;
+    margin: 20px;
   }
 
-.back_button:hover {
-  background: #8e2312;
-}
 .extend_view {
   margin: 10px;
   p { display: inline-block; }
