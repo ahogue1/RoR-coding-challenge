@@ -24,15 +24,19 @@ rails db:seed
 ```
 And watch the game unfold in the console and Banner People switch Houses in their quest for the Iron Throne. 
 
+![image](https://user-images.githubusercontent.com/31170111/59384248-9c255500-8d16-11e9-8136-23ec3b015f8a.png)
+
 
 ## Banner People Index
 The app will route automatically to BannerPeople#Index
 
 This will show the most current House each Banner Person belongs to, their most recent Loyalty Points reading and a link to thier #show pages. 
 
+![image](https://user-images.githubusercontent.com/31170111/59384682-98460280-8d17-11e9-8ab6-6f34c1bc1db4.png)
+
 The background is pure CSS generated snow - I wouldn't normally use this in design, but I like messing with CSS transformations and since Winter is Coming, it felt appropriate. I used this [CSS Snow Generator] tutorial and tweaked it a bit to be less...intense.
 
-## BannerPerson#Show Tables
+## BannerPerson#Show Graph
 
 At the top of the Banner Person Show page is the Highcharts Graph that shows the progression of a Banner Person's loyalty points throughout the month of January in the line and the handouts given in the bars
 
@@ -40,13 +44,21 @@ I used the Highcharts gem and started with the dark-green theme and customized i
 
 As recommended, I used the `gon` gem to transform my Ruby into JS variables. 
 
+![image](https://user-images.githubusercontent.com/31170111/59384537-43a28780-8d17-11e9-8ab7-582c99a23230.png)
+
 ## BannerPerson#Show Tables
 
 The Simple view and Extended view are seperate tables that are shown/hidden with a javascript fundtion found in `application.js`
 
+![image](https://user-images.githubusercontent.com/31170111/59384905-215d3980-8d18-11e9-8a8f-64643fa6daad.png)
+
+![image](https://user-images.githubusercontent.com/31170111/59384978-4782d980-8d18-11e9-8f96-f1c56a11d17d.png)
+
 Values:
 * The house-ID is a combination of the House name's acronym (saved as `house_prefix` in the DB) interpolated with the BannerPerson ID
 * I used `Bootstrap` to make a modal the `edit` function for the Advisement. Both the value and the date can be edited. 
+
+![image](https://user-images.githubusercontent.com/31170111/59384819-eeb34100-8d17-11e9-8dc4-0bc6b6956f06.png)
 
 
 ## Concepts that were new to me: 
