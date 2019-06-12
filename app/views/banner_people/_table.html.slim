@@ -4,7 +4,7 @@ h3.table_heading Progress Table
   | <input type="radio" id="simple" name="tab" checked=true />
     <label for="simple">Simple Table View</label>
     <input type="radio" id="extended" name="tab" />
-    <label for="extended">Extended Table View</label>
+    <label for="extended">Enhanced View</label>
 
 .banner_person_extended_table id ="extended_table" style="display:none;"
   table class = "banner_person_table"
@@ -16,6 +16,7 @@ h3.table_heading Progress Table
         th.td_number Handout
         th.td_number Loyalty Points
         th.td_number Advisement
+        th.td_number % Accepted
 
     tbody
       - @table_data.each do |datum|
@@ -24,9 +25,9 @@ h3.table_heading Progress Table
           td
             p = datum[:date].strftime("%b %d, %Y")
           td
-            p = "#{datum[:house].prefix}#{@banner_person.id} "
+            p = "#{datum[:house]&.prefix}#{@banner_person.id} "
           td
-            p = datum[:house].name
+            p = datum[:house]&.name
           td.td_number
             p = datum[:handout] ? number_with_delimiter(datum[:handout].value) : "—"
           td.td_number
@@ -36,9 +37,13 @@ h3.table_heading Progress Table
           - if advisement
             td.td_number
               p = number_with_delimiter(advisement.value)
+            td.td_number
             td = render 'advisement_modal', advisement: advisement, modal_id: "extended_modal_#{advisement.id}"
           - else
             td.td_number
+
+            td.td_number
+              p = datum[:percent_accepted] ? "#{datum[:percent_accepted]}%" : "—"
 
 
 .banner_person_simple_table id ="simple_table"

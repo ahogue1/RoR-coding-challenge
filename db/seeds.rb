@@ -6,7 +6,6 @@ puts "-------------------------------------------"
 puts "Creating Seeds..."
 puts "-------------------------------------------"
 
-
 ### Generate 4 random Houses
 houses = []
 
@@ -31,9 +30,11 @@ houses.each do |house|
     )
 
 
-    loyalty_point_days = [rand(1..7), rand(8..15), rand(16..23), rand(24..31)] # Generate 4 random dates each week
+    loyalty_point_days = [rand(1..7), rand(8..15), rand(16..23), rand(24..31)] # Generate 1 random date each week
     handout_days = (1..31).to_a.shuffle.take(rand(8..12)) # Generate 8 to 12 unique random dates
-    advisement_days = handout_days.shuffle.take(2) # Generate Handouts: 2 to 3 handouts per week
+    advisement_days = handout_days.shuffle.take(3) # Generate Handouts: 2 to 3 handouts per week
+    acceptance_odds = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] + (-5..5).to_a #Odds of accepting the last advisement is 50% or might increase or decrease
+    advisement = nil
 
     (1..31).each do |day|
       ### Generate Loyalty points about once/week
@@ -61,27 +62,34 @@ houses.each do |house|
         end
       end
 
-      value = rand(2..200) * 100
+      ### Generate Advisement points every couple of weeks
+      if advisement_days.include? day
+        advisement = Advisement.create(
+          banner_person: banner_person,
+          value: rand(2..200) * 100,
+          date: date,
+          house: banner_person.house
+        )
+      end
+
       if handout_days.include? day
         if rand(1..10) > 1 # Skip 10% of handouts
+          if advisement
+            value = advisement.value
+          else
+            value = rand(2..200) * 100
+          end
+
+          #decides if handout should increase, decrease or maintain
+          recommendation = value + (acceptance_odds.sample * 100)
+
           Handout.create(
             banner_person: banner_person,
-            value: value,
+            value: recommendation,
             date: date,
             house: banner_person.house
           )
         end
-      end
-
-        ### Generate Advisement points every couple of weeks
-      if advisement_days.include? day
-        recommendation =  value + [- 500, 0, 500].shuffle.first  #decides if handout should increase, decrease or maintain
-        Advisement.create(
-          banner_person: banner_person,
-          value: recommendation,
-          date: date,
-          house: banner_person.house
-        )
       end
     end
   end

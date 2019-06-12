@@ -34,10 +34,7 @@ class BannerPeopleController < ApplicationController
         loyalty_point.date == date
       end
 
-      if handout
-          house = handout.house
-          house.save
-      end
+      house = handout.house if handout
 
       if handout || loyalty_point
         graph_data.push({
@@ -46,6 +43,10 @@ class BannerPeopleController < ApplicationController
           loyalty_point: loyalty_point,
           house: house
         })
+      else
+        graph_data.push({
+          date: date
+        })
       end
     end
 
@@ -53,10 +54,12 @@ class BannerPeopleController < ApplicationController
   end
 
   def table_data(advisements, graph_data)
-    table_data = graph_data.deep_dup
+    table_data = graph_data.select { |datum| datum[:handout] || datum[:loyalty_point] }.deep_dup
+    previous_advisement = nil
 
     advisements.each do |advisement|
       datum = table_data.find { |datum| datum[:date] == advisement.date }
+
       if datum
         datum[:advisement] = advisement
       else
@@ -66,8 +69,32 @@ class BannerPeopleController < ApplicationController
           house: advisement.house,
         })
       end
+
+      if previous_advisement
+        data_between_advisements = table_data.select { |datum|
+          datum[:date] >= previous_advisement.date && datum[:date] < advisement.date
+        }
+
+        handouts = data_between_advisements.map { |datum| datum[:handout] }.compact
+
+        # calculate acceptance percentage
+        percentage = percent_accepted(handouts, previous_advisement)
+
+        data_between_advisements.each { |datum_between_advisements|
+          datum_between_advisements[:percent_accepted] = percentage
+        }
+
+      end
+
+      previous_advisement = advisement
     end
 
     table_data.sort { |a, b| a[:date] <=> b[:date] }
+  end
+
+  def percent_accepted(handouts, previous_advisement)
+    matching = handouts.select { |handout| handout.value == previous_advisement.value }.count
+    decimal = matching / handouts.count.to_f
+    (decimal * 100).round(1)
   end
 end
