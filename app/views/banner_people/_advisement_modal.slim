@@ -1,0 +1,14 @@
+button.btn.btn-primary type="button" data-toggle="modal" data-target="##{modal_id}" Edit Advisement
+
+.modal.fade id=modal_id tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+  .modal-dialog.modal-dialog-centered role="document"
+    .modal-content
+      .modal-header
+        h5.modal-title#exampleModalCenterTitle Edit Advisement
+        button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true" &times;
+      .modal-body
+        = simple_form_for [advisement], method: "patch" do |f|
+          = f.input :value
+          = f.input :date
+          = f.submit "Update", class: "btn btn-primary"

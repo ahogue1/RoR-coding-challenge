@@ -31,8 +31,14 @@ h3 Table
             p = datum[:handout] ? number_with_delimiter(datum[:handout].value) : "—"
           td.td_number
             p = datum[:loyalty_point] ? datum[:loyalty_point].value : "—"
-          td.td_number
-            p = datum[:advisement] ? number_with_delimiter(datum[:advisement].value) : "—"
+
+          - advisement = datum[:advisement]
+          - if advisement
+            td.td_number
+              p = number_with_delimiter(advisement.value)
+            td = render 'advisement_modal', advisement: advisement, modal_id: "extended_modal_#{advisement.id}"
+          - else
+            td.td_number
 
 
 .banner_person_simple_table id ="simple_table"
@@ -56,5 +62,11 @@ h3 Table
             p = datum[:handout] ? number_with_delimiter(datum[:handout].value) : "—"
           td.td_number
             p = datum[:loyalty_point] ? datum[:loyalty_point].value : "—"
-          td.td_number
-            p = datum[:advisement] ? number_with_delimiter(datum[:advisement].value) : "—"
+
+          - advisement = datum[:advisement]
+          - if advisement
+            td.td_number
+              p = number_with_delimiter(advisement.value)
+            td = render 'advisement_modal', advisement: advisement, modal_id: "simple_modal_#{advisement.id}"
+          - else
+            td.td_number
