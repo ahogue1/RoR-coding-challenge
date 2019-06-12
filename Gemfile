@@ -28,6 +28,7 @@ gem 'high_voltage'
 gem 'slim-rails'
 
 gem 'highcharts-rails', '~> 6.0', '>= 6.0.3'
+gem 'bootstrap', '~> 4.0'
 gem 'gon'
 gem 'responders'
 gem 'jquery-ui-rails'
