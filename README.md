@@ -1,211 +1,74 @@
-# Quick rails app w/ graph
+# Banner People
 
-### Technologies explored (check the this skeleton)
+Banner People is a Game of Thrones based loyalty tracker where the Banner People's House loyalties change based on their current House's handouts. Meanwhile, a house Maester will be giving advisements to try to keep the Banner Person within the House's acceptable range of loyalty points
 
-* **Ruby** ('2.5.1')
-* **Ruby on Rails** ('~> 5.1.6.2') — with Turbolinks
-* **Postgres** ('~> 11.2')
-* **HighCharts JS** —
-  [here's an example][highcharts example]
-* **Faker**
-* _Don't_ use a frontend library like **React**
-* Whatever engineering principles you think help you solve this best
 
----
+## Seeds
 
-### Schema Specifics
-You are building, at minimum, a single Show view for a `BannerPerson`.
+Generating the Seeds was my favorite part of this project. Generating the odds and keeping everything random to follow real human behavior and then watching the data unfold was a fun challenge. 
 
-A given `House` is made up of BannerPersons.
+The seeds will similate 
+[Faker::TvShows::GameOfThrones]
 
-BannerPersons have a House-Specific ID which is unique within that House, e.g.,
-`BannerPersonTudor3`. BannerPersons could move between Houses but may only be in
-one active House at a time. If one House's `BannerPersonTudor3` moves to
-another, they might receive a new specific ID like `Tudor-14` depending on how
-that House styles their BannerPersons for internal records. These IDs might run
-into some overlap and don't have to be unique across all data. There is no
-restriction on what they look like.
+* Loyalty Points are measured on a random date every 7-8 days
+  * If the Banner Person's Loyalty Points fall below 10, a new house will be selected, but there's a 25% that the Banner    Person will remain in the same house. These House changes will appear in the console as the Seeds are created. 
+* Handouts are handed out 8 to 12 random times per month
+  * Around 10% of those will be skipped
+  * Handouts have a 50% probability of being the previous advisement, but there's a 25% chance that they will increase 100, 200, 300, 400 or 500 units and a 25% chance that they will decrease by the same amounts. 
+ * Advisements are generated on 3 random dates per month when a handout is also being given
 
-BannerPersons have two specific metrics we want to keep track of, and **we want
-to track both metrics in terms of which House the BannerPerson was a part of at
-that time**.
-  * **Loyalty Points** (`LoyaltyPoint`) measured about **once weekly** and have a
-    points (pts) value of somewhere between **5.0 - 18.0** inclusive.
-  * **Handouts** (`Handout`) are given **two to three times a week** at
-    somewhere between **200 - 20_000** units inclusive (divisible by 100), and
-    are **skipped about 5-10% of the time** due to nefarious circumstances
-
-**Advisements** are given **every couple of weeks** or so per BannerPerson
-(generated from an unseen algorithm consulted by a House Maester), and propose
-new Handouts amounts if Loyalty Points drop below that House's setting for lower
-targets or climb above that House's setting for upper targets. **Target range
-for LoyaltyPoints should be a range of 10.0 pts to 15.0 pts**, which could, in
-theory, be changed by each House depending how much they care about loyalty, but
-isn't very important to get into.
-
-**NB:** There are many different ways to organize this data given the above
-(and below) items. More tables is not necessarily a bad thing, provided they
-make sense and nothing is overly cluttered.
-
-#### Help, what is a House BannerPerson? Give me some flavor text please?
-A BannerPerson has meager holdings in the greater region held by a House. A
-BannerPerson might from time to time change loyalties, and stop supporting
-their House, change to a new House, or go back to an old House.
-
-LoyaltyPoints are a metric measured on a given BannerPerson (perhaps some little
-birds are reporting back to the House these metrics), and reflect a certain
-number of points (pts) that determines how loyal the BannerPerson is to the
-their current House.
-
-A House wants to keep its BannerPersons' LoyaltyPoints in a certain range of
-points:
-  * Not enough points and the BannerPerson's loyalty becomes questionable
-  * Too many points and the BannerPerson may garner more support of their
-    sibling BannerPersons, and call a challenge to become the ruling House of
-    the region (aka usurping, which tends to go poorly for those previously in
-    power).
-
-A House Maester is calculating relationships between these LoyaltyPoints and
-Handouts and coming up with (by guidance from an ancient Three-Eyed Algorithm)
-Advisements to improve LoyaltyPoints by giving the least amount of Handouts
-possible. An Advisement proposes an amount of Handout Units to give next time a
-Handout is... handed out.
-
-A House doesn't always have the opportunity to consult the ancient algorithm, or
-could forget to do so, and might increase or decrease their Handouts on the fly.
-
----
-
-### BannerPerson Show View
-Display relevant `BannerPerson` information useful to see. What to display is
-kind of open-ended. We use [Slim templating](http://slim-lang.com/) for our main
-frontend setup, which is an alternative to erb with "simpler" syntax. It is
-fairly easy to pick up, and fun and/or/nor useful depending on personal
-preferences, but not mandatory.
-
-#### BannerPerson Show View (Graph)
-Important. Should take up the top portion of the page. Requires that some
-variables pass from Ruby to JavaScript. This is easily accomplished in a variety
-of ways. One of the easier ways uses a gem called `gon`. Highcharts provides
-really good examples and docs so setting up initially is not difficult. Below is
-a rudimentary mock visual.
-
-MVP:
-  * **Show every date in January 2019**
-  * Visualize a BannerPerson's relevant data points.
-  * Don't display Advisements in the graph.
-  * Decide which data should be the bars, and which the connected points
-  * Pay attention to the details in the code here and the rendered display
-  * This isn't a closed book exercise
+Run: 
 
 ```
-
-  ┌──────────────────────────────────────────────────────────────────────┐
-  │                                                                      │▒
-  │       ╔═══════════╗                        .●◟                       │▒
-  │       ║ ...       ║                      ,'   ╰◟                     │▒
-  │       ╚═════════▿═╝                    ,'       `╮                   │▒
-  │                 ●─.          ●────────●           ╲                  │▒
-  │                ◜   `─.    ,─'                      `◟,               │▒
-  │               ╱       ╲  ╱                            ╲              │▒
-  │   ●────●     ╱         ◝●                              ●             │▒
-  │         ╲   ╱                                                 █  █   │▒
-  │          ╲ ╱                                          █  █    █  █   │▒
-  │           ●   █                                       █  █    █  █   │▒
-  │      █  █  █  █    █  █      █  █ █      █  █         █  █    █  █   │▒
-  │      █  █  █  █    █  █      █  █ █      █  █         █  █    █  █   │▒
-  │      █  █  █  █    █  █      █  █ █      █  █         █  █    █  █   │▒
-  └──────────────────────────────────────────────────────────────────────┘▒
-   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-
+rails db:seed
 ```
+And watch the game unfold in the console and Banner People switch Houses in their quest for the Iron Throne. 
 
 
-#### BannerPerson Show View (Table)
-Should take up the bottom portion of the page. At minimal, please display the
-Enhanced view mode. Decide the best way to edit a given date's Advisement. It's
-an open-ended edit/update. See the example row structures below.
+## Banner People Index
+The app will route automatically to BannerPeople#Index
 
-**NB:** The example tables will help explain, in particular, how to calculate
-**% Accepted**.
+This will show the most current House each Banner Person belongs to, their most recent Loyalty Points reading and a link to thier #show pages. 
 
-##### Enhanced view mode:
-|  ID | HSID |  Date  |Loyalty | Handout |Advisement|% Accepted|
-|:---:|:----:|:------:|:------:|:-------:|:--------:|:--------:|
-| 123 | A-04 |01-13-19|  n/a   |900 units| 900 units|   100%   |
-| 123 | A-04 |01-11-19| 9.0 pts|800 units|    n/a   |    67%   |
-| 123 | A-04 |01-08-19|  n/a   |600 units|    n/a   |    67%   |
-| 123 | A-04 |01-05-19|  n/a   |600 units|    n/a   |    67%   |
-| 123 | A-04 |01-02-19|10.4 pts|   n/a   | 600 units|    0%    |
-| ... |      |        |        |         |          |          |
+The background is pure CSS generated snow - I wouldn't normally use this in design, but I like messing with CSS transformations and since Winter is Coming, it felt appropriate. I used this [CSS Snow Generator] tutorial and tweaked it a bit to be less...intense.
 
-##### Regular view mode (allow toggle between two table view modes):
-For an added optional challenge, include a regular view mode that shows less
-information. This table should also allow the editing of Advisements, through a
-button and a form delivered in any chosen medium (view/partial/modal/etc).
+## BannerPerson#Show Tables
 
-|  Date  |Loyalty |Handout|Advisement|                     |
-|:------:|:------:|:-----:|:--------:|:-------------------:|
-|01-02-19|10.4 pts|  n/a  | 600 units|**[Edit Advisement]**|
+At the top of the Banner Person Show page is the Highcharts Graph that shows the progression of a Banner Person's loyalty points throughout the month of January in the line and the handouts given in the bars
 
-##### Possible Table display values
-  * **ID**          (The internal database primary ID for a given BannerPerson)
-  * **SID**         (BannerPerson House Specific ID, see _Schema Specifics_)
-  * **Date**
-  * **Loyalty**
-  * **Handout**
-  * **Advisement**
-  * **Button**
+I used the Highcharts gem and started with the dark-green theme and customized it in `highcharts_theme.js` 
 
-  * ##### % Accepted
-      > Separate the calculation of `% Accepted` to an ActiveSupport Concern,
-      don't clutter the model(s)/controller(s) with this logic. It's a simple
-      way to improve readability of larger, more complicated applications.
+As recommended, I used the `gon` gem to transform my Ruby into JS variables. 
 
-      *(table above is a good reference for how this should be calculated)*
+## BannerPerson#Show Tables
 
-      Calculate a percent of accepted Handout amounts in a given span between
-      two Advisements and display that through the lifespan of the Advisement.
+The Simple view and Extended view are seperate tables that are shown/hidden with a javascript fundtion found in `application.js`
 
-      An Advisement should be considered active from the date it is created
-      until the next Advisement datum is created. The `% Accepted` will be
-      uniform through the span between Advisements, and will mutate anytime a
-      new `Handout` amount is added during that span. Again, please see the
-      above table for clues seeing how this should work.
-
----
-
-### Some Advice
-  * For the IDs, don't mess with the primary `id` key that is made for you in a
-  given table. Stick to a new column to hold the specific "id" requested.
-  * Ditto above for `date`. Don't hack around with `created_at` or anything.
-  * Ensure the high charts function is clean and makes sense for this mini app
-    * Leaning heavily on docs examples is fine: just ensure good, unique code
-  * Learn some new things
-  * Have fun!
-
-### Helpful checklist
-
-  * [ ] Instantiate a github repo when you begin the challenge.
-  * [ ] Please **make the repo private**, and invite us.
-  * [ ] Make an initial commit.
-  * [ ] **Commit frequently** and push at least daily at the end of each day.
-  * [ ] Maybe include some helpful seed data. `Faker` _could_ help you there.
-  * [ ] Please **provide a readme** (other than this one) explaining your
-    decisions/actions where you have something to say.
-  * [ ] **Include screenshots** (in that readme) of what your mini app looks
-    like!
-  * [ ] **Mention any other tech** you pulled in to help you if you did so.
-  * [x] Read this challenge readme.
+Values:
+* The house-ID is a combination of the House name's acronym (saved as `house_prefix` in the DB) interpolated with the BannerPerson ID
+* I used `Bootstrap` to make a modal the `edit` function for the Advisement. Both the value and the date can be edited. 
 
 
-### Our Part
+## Concepts that were new to me: 
 
-We'll clone your app locally and run the usual `bundle exec...` `foo`, `bar`,
-etc. to have a look at what you've built. We probably won't fix anything or run
-anything to clean up code, so please ensure style/readability is decently tidy!
+* Gon and Highcharts - both were fairly easy and produced a nice graph
 
-Enjoy 🙌
+* Slim - it was weird at first and sometimes I needed to just do good ol' un-slim HTML, but by the end of the project I liked not having closing tags and ends everywhere
+
+* Leveled Up Seeds : like I said, this was my favorite aspect. I've never made seeds that kind of mimic human behavior and unpredictability and I liked it
 
 
-[highcharts example]: https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/demo/bar-stacked/
+
+## Room for improvement: 
+
+* I had to remove Turbolinks because it was preventing page loading and changing tables styles - TurboLinks compatibility would be ideal for the fastest loading. 
+
+* The % accepted only goes until the last input Advisement, it would be ideal to have it aggregate after each new Advisement is created and for that to be put into an ActiveSupport Concern
+
+* I was very tempted to have the page play the GOT theme when BannerPerson#index loads. I resisted for the sake of my sanity, but I think if ever a page should play a song upon load; it's this one.
+
+
+
+
+[Faker::TvShows::GameOfThrones]: https://github.com/stympy/faker/blob/master/doc/tv_shows/game_of_thrones.md
+[CSS Snow Generator]: https://redstapler.co/pure-css-snow-fall-effect/
