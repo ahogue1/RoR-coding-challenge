@@ -63,10 +63,15 @@ h4, h5, h6 {
     margin: 20px;
   }
 
+  .table_heading {
+    margin-top: 20px;
+  }
+
 .extend_view {
   margin: 10px;
-  p { display: inline-block; }
-
+  label {
+    margin-right: 100px;
+  }
 }
 
 .banner_person_extended_table table{
@@ -81,6 +86,10 @@ h4, h5, h6 {
 
 .td_number {
   text-align: right;
+}
+
+.edit-button {
+  margin-left: 25px;
 }
 
 // Modal for editing advisement
@@ -124,7 +133,7 @@ $s3:"";
     height: .7rem;
     filter:blur(3px);
     box-shadow: #{$s1};
-    animation-duration: 9s;
+    animation-duration: 11s;
 }
 
 .layer2 {
@@ -132,14 +141,14 @@ $s3:"";
     height: .5rem;
     filter:blur(5px);
     box-shadow: #{$s2};
-    animation-duration: 12s;
+    animation-duration: 14s;
 }
 .layer3 {
     width: .4rem;
     height: 0.4rem;
     filter:blur(7px);
     box-shadow: #{$s3};
-    animation-duration: 14s;
+    animation-duration: 16s;
 }
 
 .layer1.a {

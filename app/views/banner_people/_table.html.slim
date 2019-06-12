@@ -1,4 +1,4 @@
-h3 Table
+h3.table_heading Progress Table
 
 .extend_view
   | <input type="radio" id="simple" name="tab" checked=true />
@@ -13,9 +13,9 @@ h3 Table
         th Date
         th House ID
         th House
-        th Handout
-        th Loyalty Points
-        th Advisement
+        th.td_number Handout
+        th.td_number Loyalty Points
+        th.td_number Advisement
 
     tbody
       - @table_data.each do |datum|
@@ -46,9 +46,9 @@ h3 Table
     thead
       tr
         th Date
-        th Handout
-        th Loyalty Points
-        th Advisement
+        th.td_number Handout
+        th.td_number Loyalty Points
+        th.td_number Advisement
 
     tbody
       - @table_data.each do |datum|
