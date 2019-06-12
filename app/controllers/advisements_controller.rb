@@ -8,7 +8,7 @@ class AdvisementsController < ApplicationController
         format.html { redirect_to @advisement.banner_person, notice: 'advisement was successfully updated.' }
         format.json { render :show, status: :ok, location: @advisement }
       else
-        format.html { render :edit }
+        format.html { redirect_to @advisement.banner_person, error: 'advisement not successfully updated' }
         format.json { render json: @advisement.errors, status: :unprocessable_entity }
       end
     end
