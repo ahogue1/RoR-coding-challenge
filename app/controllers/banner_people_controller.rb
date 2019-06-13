@@ -71,29 +71,35 @@ class BannerPeopleController < ApplicationController
       end
 
       if previous_advisement
-        data_between_advisements = table_data.select { |datum|
-          datum[:date] >= previous_advisement.date && datum[:date] < advisement.date
-        }
-
-        handouts = data_between_advisements.map { |datum| datum[:handout] }.compact
-
-        # calculate acceptance percentage
-        percentage = percent_accepted(handouts, previous_advisement)
-
-        data_between_advisements.each { |datum_between_advisements|
-          datum_between_advisements[:percent_accepted] = percentage
-        }
-
+        find_percent_accepted(table_data, previous_advisement, advisement.date)
       end
 
       previous_advisement = advisement
     end
 
+    end_date = table_data.last[:date] + 1.day
+    find_percent_accepted(table_data, previous_advisement, end_date)
+
     table_data.sort { |a, b| a[:date] <=> b[:date] }
   end
 
-  def percent_accepted(handouts, previous_advisement)
-    matching = handouts.select { |handout| handout.value == previous_advisement.value }.count
+  def find_percent_accepted(table_data, advisement, end_date)
+    data_between_advisements = table_data.select { |datum|
+      datum[:date] >= advisement.date && datum[:date] < end_date
+    }
+
+    handouts = data_between_advisements.map { |datum| datum[:handout] }.compact
+
+    # calculate acceptance percentage
+    percentage = calculate_percentage(handouts, advisement)
+
+    data_between_advisements.each { |datum_between_advisements|
+      datum_between_advisements[:percent_accepted] = percentage
+    }
+  end
+
+  def calculate_percentage(handouts, previous_advisement)
+    matching = handouts.count { |handout| handout.value == previous_advisement.value }
     decimal = matching / handouts.count.to_f
     (decimal * 100).round(1)
   end

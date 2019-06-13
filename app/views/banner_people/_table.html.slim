@@ -38,6 +38,7 @@ h3.table_heading Progress Table
             td.td_number
               p = number_with_delimiter(advisement.value)
             td.td_number
+              p = datum[:percent_accepted] ? "#{datum[:percent_accepted]}%" : "—"
             td = render 'advisement_modal', advisement: advisement, modal_id: "extended_modal_#{advisement.id}"
           - else
             td.td_number

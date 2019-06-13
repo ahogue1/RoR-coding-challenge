@@ -33,7 +33,7 @@ houses.each do |house|
     loyalty_point_days = [rand(1..7), rand(8..15), rand(16..23), rand(24..31)] # Generate 1 random date each week
     handout_days = (1..31).to_a.shuffle.take(rand(8..12)) # Generate 8 to 12 unique random dates
     advisement_days = handout_days.shuffle.take(3) # Generate Handouts: 2 to 3 handouts per week
-    acceptance_odds = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] + (-5..5).to_a #Odds of accepting the last advisement is 50% or might increase or decrease
+    acceptance_odds = [0, 0, 0, 0, 0, 0, 0, 0, 0] + (-5..5).to_a #Odds of accepting the last advisement is 50% or might increase or decrease
     advisement = nil
 
     (1..31).each do |day|
