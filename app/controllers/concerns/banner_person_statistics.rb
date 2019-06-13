@@ -57,10 +57,11 @@ module BannerPersonStatistics
       previous_advisement = advisement
     end
 
+    table_data.sort! { |a, b| a[:date] <=> b[:date] }
     end_date = table_data.last[:date] + 1.day
     find_percent_accepted(table_data, previous_advisement, end_date)
 
-    table_data.sort { |a, b| a[:date] <=> b[:date] }
+    table_data
   end
 
   def find_percent_accepted(table_data, advisement, end_date)
