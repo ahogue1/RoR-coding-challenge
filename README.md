@@ -7,7 +7,7 @@ Banner People is a Game of Thrones based loyalty tracker where the Banner People
 
 Generating the Seeds was my favorite part of this project. Generating the odds and keeping everything random to follow real human behavior and then watching the data unfold was a fun challenge. 
 
-The seeds will similate 
+The seeds will simulate 
 [Faker::TvShows::GameOfThrones]
 
 * Loyalty Points are measured on a random date every 7-8 days
@@ -48,7 +48,7 @@ As recommended, I used the `gon` gem to transform my Ruby into JS variables.
 
 ## BannerPerson#Show Tables
 
-The Simple view and Extended view are seperate tables that are shown/hidden with a javascript fundtion found in `application.js`
+The Simple view and Extended view are separate tables that are shown/hidden with a javascript function found in `application.js`
 
 ![image](https://user-images.githubusercontent.com/31170111/59396927-a4de5100-8d3f-11e9-95eb-def25f098256.png)
 
@@ -67,7 +67,9 @@ Values:
 
 * Slim - it was weird at first and sometimes I needed to just do good ol' un-slim HTML, but by the end of the project I liked not having closing tags and ends everywhere
 
-* Leveled Up Seeds : like I said, this was my favorite aspect. I've never made seeds that kind of mimic human behavior and unpredictability and I liked it
+* Leveled Up Seeds - like I said, this was my favorite aspect. I've never made seeds that kind of mimic human behavior and unpredictability and I liked it
+
+* ActiveController Concerns - Documentation was a little confusing at first, but I liked the clean look of the controller that resulted.
 
 
 
@@ -75,9 +77,9 @@ Values:
 
 * I had to remove Turbolinks because it was preventing page loading and changing tables styles - TurboLinks compatibility would be ideal for the fastest loading. 
 
-* The % accepted only goes until the last input Advisement, it would be ideal to have it aggregate after each new Advisement is created and for that to be put into an ActiveSupport Concern
+* The month of January is hard coded, it would be better to be able to select a month to view, but for the purpose of this demonstration I kept all data in the month of January 2019
 
-* I was very tempted to have the page play the GOT theme when BannerPerson#index loads. I resisted for the sake of my sanity, but I think if ever a page should play a song upon load; it's this one.
+* I was very tempted to have the page play the GOT theme when BannerPerson#index loads. I resisted for the sake of my sanity, but I think if ever a page should play a song upon load, it's this one.
 
 
 
